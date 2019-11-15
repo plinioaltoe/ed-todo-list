@@ -11,6 +11,10 @@ class UserController {
       password: Yup.string()
         .required()
         .min(6),
+      passwordConfirmation: Yup.string()
+        .required()
+        .min(6)
+        .oneOf([Yup.ref('password')]),
     });
 
     if (!(await schema.isValid(req.body)))
