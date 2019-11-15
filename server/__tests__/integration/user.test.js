@@ -5,11 +5,10 @@ import app from '../../src/app';
 import factory from '../factories';
 import truncate from '../utils/truncate';
 
-beforeEach(async () => {
-  await truncate();
-});
-
-describe('', () => {
+describe('User', () => {
+  beforeEach(async () => {
+    await truncate();
+  });
   it('should encrypt user password when he is created', async () => {
     const user = await factory.create('User', {
       password: '123123',
