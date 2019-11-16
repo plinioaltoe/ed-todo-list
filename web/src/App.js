@@ -1,22 +1,22 @@
 import React from 'react';
-import logo from './assets/rocket.svg';
-import astronaut from './assets/astronaut.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import './config/reactotron';
+import { ToastContainer } from 'react-toastify';
+import { store, persistor } from './store';
+import 'react-toastify/dist/ReactToastify.css';
+import Routes from './routes';
+import toastStyles from './styles/toast';
+import GlobalStyle from './styles/global';
 
-function App() {
-  return (
-    <div className="App">
-      <img className="logo" src={logo} alt="Rocketseat Logo" />
-      <h2>Welcome to OmniStack!</h2>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-        Learn React
-      </a>
-      <img className="astronaut" src={astronaut} alt="Astronaut" />
-    </div>
-  );
-}
+const App = () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <GlobalStyle />
+      <Routes />
+      <ToastContainer {...toastStyles} />
+    </PersistGate>
+  </Provider>
+);
 
 export default App;
