@@ -30,12 +30,12 @@ export const Header = styled.div`
   color: ${colors.normal};
 
   border-bottom: 1px solid ${colors.shaddow};
-  box-shadow: 0 ${metrics.smallShaddow * 2}px ${metrics.smallShaddow * 2}px
+  /* box-shadow: 0 ${metrics.smallShaddow * 2}px ${metrics.smallShaddow * 2}px
     ${metrics.smallShaddow * -1}px ${colors.regular};
   -moz-box-shadow: 0 ${metrics.smallShaddow * 2}px ${metrics.smallShaddow * 2}px
     ${metrics.smallShaddow * -1}px ${colors.regular};
   -webkit-box-shadow: 0 ${metrics.smallShaddow * 2}px ${metrics.smallShaddow * 2}px
-    ${metrics.smallShaddow * -1}px ${colors.regular};
+    ${metrics.smallShaddow * -1}px ${colors.regular}; */
 
   form {
     width: 100%;
