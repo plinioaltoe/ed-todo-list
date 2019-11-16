@@ -62,7 +62,10 @@ class ProjectController {
         user_id: userId,
         description,
       });
-      return res.json(project);
+      return res.json({
+        id: project.id,
+        description: project.description,
+      });
     } catch (err) {
       return res.json(err);
     }

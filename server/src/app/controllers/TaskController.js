@@ -4,7 +4,7 @@ import Task from '../models/Task';
 class TaskController {
   async index(req, res) {
     const task = await Task.findAll({
-      where: { user_id: req.userId, project_id: req.params.projectId },
+      where: { user_id: req.userId },
       attributes: [
         'id',
         'description',
