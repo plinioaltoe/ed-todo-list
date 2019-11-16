@@ -3,7 +3,6 @@ import User from '../models/User';
 
 class SessionController {
   async store(req, res) {
-    console.log('entrei');
     const schema = Yup.object().shape({
       email: Yup.string()
         .email()
