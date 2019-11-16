@@ -63,7 +63,7 @@ export const Creators = {
     },
   }),
 
-  delTaksRequest: id => ({
+  deleteTaksRequest: id => ({
     type: Types.DEL_REQUEST,
     payload: {
       id,

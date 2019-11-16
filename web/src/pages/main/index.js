@@ -7,14 +7,10 @@ import { Creators as ProjectActions } from '~/store/ducks/project'
 import { propTypes } from './propTypes'
 import { TextField, Container, ContainerList, ContentList } from './styles'
 import ProjectAdd from '~/components/ProjectAdd'
-import Project from '~/components/Project'
+import ProjectList from '~/components/ProjectList'
 
 class Main extends Component {
   static propTypes = propTypes
-
-  state = {
-    title: '',
-  }
 
   componentWillMount = () => {
     this.handleSearch()
@@ -31,28 +27,16 @@ class Main extends Component {
   }
 
   render() {
-    const { location, projects } = this.props
-    const { title } = this.state
-    const searchBar = (
-      <Container onSubmit={this.handleSubmit}>
-        <button id="search" type="submit">
-          <i className="fa fa-search" />
-        </button>
-        <TextField
-          value={title}
-          onChange={e => this.setState({ title: e.target.value })}
-        />
-      </Container>
-    )
+    const { projects } = this.props
+
     return (
       <Fragment>
         <Header />
-        {location.pathname === '/search' && searchBar}
         <ContainerList>
           <ContentList>
-            {projects && projects.map(project => <Project project={project} />)}
+            {Array.isArray(projects) &&
+              projects.map(project => <ProjectList key={project.id} project={project} />)}
           </ContentList>
-          <ContentList>Próximos Meetups</ContentList>
           <ProjectAdd />
         </ContainerList>
       </Fragment>

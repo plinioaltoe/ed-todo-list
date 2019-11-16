@@ -7,6 +7,8 @@ export const Types = {
   GET_REQUEST: 'project/GET_REQUEST',
   DEL_REQUEST: 'project/DEL_REQUEST',
   SUCCESS: 'project/SUCCESS',
+  ADD_SUCCESS: 'project/ADD_SUCCESS',
+  DEL_SUCCESS: 'project/DEL_SUCCESS',
   FAILURE: 'project/FAILURE',
 }
 
@@ -15,7 +17,7 @@ export const Types = {
  */
 const INITIAL_STATE = {
   loading: false,
-  data: {},
+  data: [],
   error: '',
 }
 
@@ -24,13 +26,29 @@ export default function project(state = INITIAL_STATE, action) {
     case Types.ADD_REQUEST:
     case Types.GET_REQUEST:
       return { ...state, loading: true, error: '' }
-    case Types.SUCCESS:
+    case Types.SUCCESS: {
       return {
         ...state,
         loading: false,
         error: '',
         data: action.payload.data,
       }
+    }
+    case Types.ADD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        data: [...state.data, action.payload.data],
+      }
+    case Types.DEL_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        data: state.data.filter(proj => proj.id !== Number(action.payload.id)),
+      }
+    }
     case Types.FAILURE:
       return { ...state, loading: false, error: action.payload.error }
     default:
@@ -51,7 +69,7 @@ export const Creators = {
     type: Types.GET_REQUEST,
   }),
 
-  delProjectRequest: id => ({
+  deleteProjectRequest: id => ({
     type: Types.DEL_REQUEST,
     payload: {
       id,
@@ -61,6 +79,16 @@ export const Creators = {
   projectSuccess: data => ({
     type: Types.SUCCESS,
     payload: { data },
+  }),
+
+  projectAddSuccess: data => ({
+    type: Types.ADD_SUCCESS,
+    payload: { data },
+  }),
+
+  projectDelSuccess: id => ({
+    type: Types.DEL_SUCCESS,
+    payload: { id },
   }),
 
   projectFailure: error => ({

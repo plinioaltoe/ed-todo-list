@@ -6,12 +6,14 @@ import { Container, TextField, Button, Checkbox, Form } from './styles'
 
 import { Creators as ProjectActions } from '../../store/ducks/project'
 import { Creators as TaskActions } from '../../store/ducks/task'
+import TaskList from '../TaskList'
 
-class Project extends Component {
+class ProjectList extends Component {
   static propTypes = {
     finishTaksRequest: PropTypes.func.isRequired,
     addTaksRequest: PropTypes.func.isRequired,
     getTaksRequest: PropTypes.func.isRequired,
+    deleteProjectRequest: PropTypes.func.isRequired,
     project: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number]))
       .isRequired,
   }
@@ -27,10 +29,9 @@ class Project extends Component {
   }
 
   componentWillMount = () => {
-    const { project, getTaksRequest } = this.props
+    const { project } = this.props
     const { description } = project
     this.setState({ description })
-    getTaksRequest(project.id)
   }
 
   isEmpty = () => {
@@ -54,13 +55,13 @@ class Project extends Component {
     }
   }
 
-  handleCheck = e => {
-    const { finishTaksRequest } = this.props
-    finishTaksRequest(e.target.value)
-  }
-
   handleChange = e => {
     this.setState({ taskDescription: e.target.value })
+  }
+
+  handleDelete = e => {
+    const { deleteProjectRequest } = this.props
+    deleteProjectRequest(e.target.value)
   }
 
   render() {
@@ -69,57 +70,24 @@ class Project extends Component {
     const { Tasks: tasks } = project
 
     const tasksDone = Array.isArray(tasks) && tasks.filter(task => task.done)
-    const tasksNotDone = Array.isArray(tasks) && tasks.filter(task => !task.done)
+    const tasksToDo = Array.isArray(tasks) && tasks.filter(task => !task.done)
     return (
       <Container>
-        <ul>
-          <li>
-            <div>{description}</div>
-          </li>
-          <li>
-            <div>To Do</div>
-          </li>
-          {tasksDone &&
-            tasksDone.map(task => {
-              return (
-                <li key={task.id}>
-                  <Checkbox
-                    value={task.id}
-                    onChange={this.handleCheck}
-                    type="checkbox"
-                    checked={task.done}
-                  />
-                  <div>{task.description}</div>
-                </li>
-              )
-            })}
-        </ul>
-        <ul>
-          <li>
-            <div>Done</div>
-          </li>
-          {tasksNotDone &&
-            tasksNotDone.map(task => {
-              return (
-                <li key={task.id}>
-                  <Checkbox
-                    value={task.id}
-                    onChange={this.handleCheck}
-                    type="checkbox"
-                    checked={task.done}
-                  />
-                  <div>{task.description}</div>
-                </li>
-              )
-            })}
-        </ul>
+        <div>
+          <div>{description}</div>
+          <Button value={project.id} onClick={this.handleDelete}>
+            Excluir
+          </Button>
+        </div>
+        <TaskList title="To Do" tasks={tasksToDo} />
+        <TaskList title="Done" tasks={tasksDone} disabled />
 
         <Form onSubmit={this.handleAdd}>
           {error && <p>{error}</p>}
           {errorLocalMessage && <p>{errorLocalMessage}</p>}
           <TextField
-            type="description"
-            placeholder="Project name"
+            type="text"
+            placeholder="Task name"
             onChange={this.handleChange}
             value={taskDescription}
           />
@@ -132,11 +100,7 @@ class Project extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  tasks: state.task.data,
-})
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ ...ProjectActions, ...TaskActions }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Project)
+export default connect(() => {}, mapDispatchToProps)(ProjectList)

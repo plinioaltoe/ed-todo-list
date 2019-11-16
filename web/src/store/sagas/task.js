@@ -8,8 +8,7 @@ import { Creators as ProjectActions } from '../ducks/project'
 export function* addTask(action) {
   try {
     const { payload: task } = action
-    const { data } = yield call(api.post, `/tasks`, task)
-    console.tron.log('TAREFA', data)
+    yield call(api.post, `/tasks`, task)
     yield put(ProjectActions.getProjectRequest())
     toast('Tarefa adicionada com sucesso!')
     yield put(push('/main'))
@@ -33,8 +32,21 @@ export function* getTask(action) {
 export function* finishTask(action) {
   try {
     const { payload: task } = action
-    const { data } = yield call(api.get, `/tasks/finish/${task.id}`)
-    yield put(TaskActions.taskSuccess(data))
+    yield call(api.get, `/tasks/finish/${task.id}`)
+    yield put(ProjectActions.getProjectRequest())
+    toast('Task succed done!')
+  } catch (error) {
+    const erroMsg = 'Erro ao buscar tarefa!'
+    yield put(TaskActions.taskFailure(erroMsg + error))
+  }
+}
+
+export function* deleteTask(action) {
+  try {
+    const { payload: task } = action
+    yield call(api.delete, `/tasks/${task.id}`)
+    toast('Task succed deleted!')
+    yield put(ProjectActions.getProjectRequest())
   } catch (error) {
     const erroMsg = 'Erro ao buscar tarefa!'
     yield put(TaskActions.taskFailure(erroMsg + error))

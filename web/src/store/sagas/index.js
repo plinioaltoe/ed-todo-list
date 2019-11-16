@@ -8,8 +8,8 @@ import { Types as TaskTypes } from '../ducks/task'
 import { signin } from './auth'
 import { addUser, getUser } from './user'
 // import { getPreferences } from './preference'
-import { addProject, getProject } from './project'
-import { addTask, getTask, finishTask } from './task'
+import { addProject, getProject, deleteProject } from './project'
+import { addTask, getTask, finishTask, deleteTask } from './task'
 
 export default function* rootSaga() {
   // User
@@ -20,11 +20,13 @@ export default function* rootSaga() {
   // Projects
   const projectAdd = takeLatest(ProjectTypes.ADD_REQUEST, addProject)
   const projectGet = takeLatest(ProjectTypes.GET_REQUEST, getProject)
+  const projectDel = takeLatest(ProjectTypes.DEL_REQUEST, deleteProject)
 
   // Tasks
   const taskAdd = takeLatest(TaskTypes.ADD_REQUEST, addTask)
   const taskGet = takeLatest(TaskTypes.GET_REQUEST, getTask)
   const taskFinish = takeLatest(TaskTypes.FINISH_REQUEST, finishTask)
+  const taskDelete = takeLatest(TaskTypes.DEL_REQUEST, deleteTask)
 
   yield all([
     userSignIn,
@@ -32,8 +34,10 @@ export default function* rootSaga() {
     userGet,
     projectAdd,
     projectGet,
+    projectDel,
     taskAdd,
     taskGet,
     taskFinish,
+    taskDelete,
   ])
 }

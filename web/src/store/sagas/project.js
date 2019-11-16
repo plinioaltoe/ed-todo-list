@@ -8,8 +8,8 @@ export function* addProject(action) {
   try {
     const { payload: project } = action
     const { data } = yield call(api.post, `/projects/`, project)
-    yield put(ProjectActions.projectSuccess(data))
-    toast('Projeto adicionado com sucesso!')
+    yield put(ProjectActions.projectAddSuccess(data))
+    toast('Project succed add!')
     yield put(push('/main'))
   } catch (error) {
     const erroMsg = 'Erro ao adicionar projeto!'
@@ -24,5 +24,17 @@ export function* getProject() {
   } catch (error) {
     const erroMsg = 'Erro ao buscar projeto!'
     yield put(ProjectActions.projectFailure(erroMsg + error))
+  }
+}
+
+export function* deleteProject(action) {
+  try {
+    const { payload: project } = action
+    yield call(api.delete, `/projects/${project.id}`)
+    toast('Project succed deleted, so does its tasks!')
+    yield put(ProjectActions.projectDelSuccess(project.id))
+  } catch (error) {
+    const erroMsg = 'Erro ao buscar tarefa!'
+    yield put(ProjectActions.taskFailure(erroMsg + error))
   }
 }
