@@ -4,10 +4,12 @@
 
 export const Types = {
   ADD_REQUEST: 'project/ADD_REQUEST',
+  UPDATE_REQUEST: 'project/UPDATE_REQUEST',
   GET_REQUEST: 'project/GET_REQUEST',
   DEL_REQUEST: 'project/DEL_REQUEST',
   SUCCESS: 'project/SUCCESS',
   ADD_SUCCESS: 'project/ADD_SUCCESS',
+  UPDATE_SUCCESS: 'project/UPDATE_SUCCESS',
   DEL_SUCCESS: 'project/DEL_SUCCESS',
   FAILURE: 'project/FAILURE',
 }
@@ -23,7 +25,9 @@ const INITIAL_STATE = {
 
 export default function project(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.UPDATE_REQUEST:
     case Types.ADD_REQUEST:
+    case Types.DEL_REQUEST:
     case Types.GET_REQUEST:
       return { ...state, loading: true, error: '' }
     case Types.SUCCESS: {
@@ -41,6 +45,20 @@ export default function project(state = INITIAL_STATE, action) {
         error: '',
         data: [...state.data, action.payload.data],
       }
+    case Types.UPDATE_SUCCESS: {
+      const currentProject = state.data.findIndex(
+        proj => proj.id === Number(action.payload.data.id),
+      )
+      state.data[currentProject] = {
+        ...state.data[currentProject],
+        description: action.payload.data.description,
+      }
+      return {
+        ...state,
+        loading: false,
+        error: '',
+      }
+    }
     case Types.DEL_SUCCESS: {
       return {
         ...state,
@@ -65,6 +83,11 @@ export const Creators = {
     payload,
   }),
 
+  updateProjectRequest: payload => ({
+    type: Types.UPDATE_REQUEST,
+    payload,
+  }),
+
   getProjectRequest: () => ({
     type: Types.GET_REQUEST,
   }),
@@ -83,6 +106,11 @@ export const Creators = {
 
   projectAddSuccess: data => ({
     type: Types.ADD_SUCCESS,
+    payload: { data },
+  }),
+
+  projectUpdateSuccess: data => ({
+    type: Types.UPDATE_SUCCESS,
     payload: { data },
   }),
 

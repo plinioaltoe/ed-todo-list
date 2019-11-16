@@ -20,6 +20,7 @@ export function* addProject(action) {
 export function* getProject() {
   try {
     const { data } = yield call(api.get, `/projects/`)
+    console.tron.log(data)
     yield put(ProjectActions.projectSuccess(data))
   } catch (error) {
     const erroMsg = 'Erro ao buscar projeto!'
@@ -27,10 +28,23 @@ export function* getProject() {
   }
 }
 
+export function* updateProject(action) {
+  try {
+    const { payload: project } = action
+    yield call(api.put, `/projects/${project.id}`, project)
+    toast('Project succed updated!')
+    yield put(ProjectActions.projectUpdateSuccess(project))
+  } catch (error) {
+    const erroMsg = 'Erro ao buscar tarefa!'
+    yield put(ProjectActions.taskFailure(erroMsg + error))
+  }
+}
+
 export function* deleteProject(action) {
   try {
     const { payload: project } = action
-    yield call(api.delete, `/projects/${project.id}`)
+    const resp = yield call(api.delete, `/projects/${project.id}`)
+    console.tron.log(resp, project)
     toast('Project succed deleted, so does its tasks!')
     yield put(ProjectActions.projectDelSuccess(project.id))
   } catch (error) {

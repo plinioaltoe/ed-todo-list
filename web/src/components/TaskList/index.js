@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Checkbox, Button } from './styles'
+import { Container, Checkbox, Button, Icon } from './styles'
 
 import { Creators as ProjectActions } from '../../store/ducks/project'
 import { Creators as TaskActions } from '../../store/ducks/task'
@@ -31,7 +31,7 @@ class TaskList extends Component {
       <Container>
         <div>{title}</div>
         <ul>
-          {tasks &&
+          {Array.isArray(tasks) &&
             tasks.map(task => {
               return (
                 <li key={task.id}>
@@ -44,9 +44,9 @@ class TaskList extends Component {
                   />
                   <div>{task.description}</div>
                   {!disabled && (
-                    <Button value={task.id} onClick={this.handleDelete}>
-                      Excluir
-                    </Button>
+                    <Icon value={task.id} onClick={this.handleDelete}>
+                      <i className="fa fa-caret-down" />
+                    </Icon>
                   )}
                 </li>
               )

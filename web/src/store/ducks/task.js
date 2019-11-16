@@ -4,7 +4,6 @@
 
 export const Types = {
   ADD_REQUEST: 'taks/ADD_REQUEST',
-  GET_REQUEST: 'taks/GET_REQUEST',
   DEL_REQUEST: 'taks/DEL_REQUEST',
   FINISH_REQUEST: 'taks/FINISH_REQUEST',
   SUCCESS: 'taks/SUCCESS',
@@ -23,7 +22,6 @@ const INITIAL_STATE = {
 export default function tasks(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.ADD_REQUEST:
-    case Types.GET_REQUEST:
     case Types.FINISH_REQUEST:
       return { ...state, loading: true, error: '' }
     case Types.SUCCESS: {
@@ -47,13 +45,6 @@ export const Creators = {
   addTaksRequest: payload => ({
     type: Types.ADD_REQUEST,
     payload,
-  }),
-
-  getTaksRequest: projectId => ({
-    type: Types.GET_REQUEST,
-    payload: {
-      projectId,
-    },
   }),
 
   finishTaksRequest: id => ({

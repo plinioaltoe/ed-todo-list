@@ -32,7 +32,7 @@ export const Button = styled.button`
   border-radius: ${metrics.baseRadius * 5}px;
   height: ${metrics.baseMargin * 2.5}px;
   width: ${metrics.baseMargin * 15}px;
-  background: ${colors.primary};
+  background: ${colors.secondary};
   border: 0;
   color: ${colors.white};
   font-size: ${metrics.font.small}px;

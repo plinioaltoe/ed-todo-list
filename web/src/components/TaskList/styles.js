@@ -9,7 +9,7 @@ export const Container = styled.div`
   align-items: left;
   padding-top: ${metrics.basePadding}px;
   padding-bottom: ${metrics.basePadding * 3}px;
-  color: ${metrics.white};
+  color: ${colors.regular};
 
   ul {
     list-style: none;
@@ -19,8 +19,8 @@ export const Container = styled.div`
       padding-top: ${metrics.basePadding * 1.5}px;
 
       div {
-        font-size: ${metrics.font.mean}px;
-        color: ${colors.white};
+        font-size: ${metrics.font.medium}px;
+        color: ${colors.regular};
         padding-left: ${metrics.basePadding}px;
       }
     }
@@ -40,14 +40,14 @@ export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   cursor: pointer;
 
   :checked {
-    background: ${colors.primary};
+    background: ${colors.secondary};
   }
 `
 
 export const Text = styled.div`
   padding: ${metrics.basePadding * 2}px 0 0 0;
   font-size: ${metrics.font.small}px;
-  color: ${colors.white};
+  color: ${colors.editabledColor};
   opacity: 0.6;
   cursor: pointer;
 `
@@ -56,9 +56,9 @@ export const Button = styled.button`
   border-radius: ${metrics.baseRadius * 5}px;
   height: ${metrics.baseMargin * 2.5}px;
   width: ${metrics.baseMargin * 15}px;
-  background: ${colors.primary};
+  background: ${colors.secondary};
   border: 0;
-  color: ${colors.white};
+  color: ${colors.regular};
   font-size: ${metrics.font.small}px;
   font-weight: bold;
   cursor: pointer;
@@ -73,7 +73,7 @@ export const TextField = styled.input`
 
   font-family: Helvetica;
   font-size: ${metrics.font.big}px;
-  color: ${colors.white};
+  color: ${colors.regular};
 
   text-align: left;
 
@@ -95,4 +95,8 @@ export const Form = styled.form`
     width: 100%;
     text-align: center;
   }
+`
+
+export const Icon = styled.div`
+  color: ${colors.editabledColor};
 `

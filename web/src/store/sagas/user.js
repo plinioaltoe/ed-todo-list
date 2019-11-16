@@ -16,25 +16,3 @@ export function* addUser(action) {
     yield put(UserActions.userFailure(erroMsg + error))
   }
 }
-
-export function* getUser(action) {
-  try {
-    const { payload: user } = action
-    const { data } = yield call(api.get, `/users/${user.id}`)
-    data.passwordConfirmation = data.password
-    yield put(UserActions.userSuccess(data))
-  } catch (error) {
-    const erroMsg = 'Erro ao buscar usuário! '
-    yield put(UserActions.userFailure(erroMsg + error))
-  }
-}
-
-export function* changeStateUser(action) {
-  try {
-    const { payload: user } = action
-    yield put(UserActions.userStateSuccess(user))
-  } catch (error) {
-    const erroMsg = 'Erro ao atualizar o state do redux para usuário'
-    yield put(UserActions.userFailure(erroMsg + error))
-  }
-}

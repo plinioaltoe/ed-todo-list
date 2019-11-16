@@ -6,23 +6,13 @@ import { Container, Menu, MenuProfile } from './styles'
 
 const Header = ({ name }) => (
   <Container>
-    <div id="img">
-      <img src="" alt="logo" />
-    </div>
-    <Menu>
-      <Link to="/dashboard" id="link-dashboard">
-        EDirectinsure TODO List
-      </Link>
-    </Menu>
+    <Menu>EDirectinsure TODO List</Menu>
     <MenuProfile>
-      <img src="" alt="nome" />
-
+      <div>
+        {name}
+        <i className="fa fa-caret-down" />
+      </div>
       <ul>
-        <li>
-          <Link to="/profile" id="link-profile">
-            {name}
-          </Link>
-        </li>
         <li>
           <Link onClick={() => logout()} to="/" id="link-logout">
             Logout

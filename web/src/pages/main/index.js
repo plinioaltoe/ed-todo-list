@@ -5,7 +5,7 @@ import Header from '~/components/Header'
 // import MeetupList from '~/components/MeetupList'
 import { Creators as ProjectActions } from '~/store/ducks/project'
 import { propTypes } from './propTypes'
-import { TextField, Container, ContainerList, ContentList } from './styles'
+import { ContainerList, ContentList } from './styles'
 import ProjectAdd from '~/components/ProjectAdd'
 import ProjectList from '~/components/ProjectList'
 

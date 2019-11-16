@@ -1,5 +1,5 @@
-import { css } from 'glamor';
-import { colors, metrics } from './index';
+import { css } from 'glamor'
+import { colors, metrics } from './index'
 
 const toastStyles = {
   toastClassName: css({
@@ -10,7 +10,7 @@ const toastStyles = {
     background: colors.lighter,
   }),
   progressClassName: css({
-    background: colors.primary,
+    background: colors.secondary,
   }),
-};
-export default toastStyles;
+}
+export default toastStyles

@@ -1,7 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
-import 'font-awesome/css/font-awesome.css';
-import { colors } from './index';
+import 'font-awesome/css/font-awesome.css'
+import { colors } from './index'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -11,10 +11,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: ${colors.secondary};
+    background: ${colors.primary};
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
     font-family: Helvetica, sans-serif;
   }
-`;
-export default GlobalStyle;
+`
+export default GlobalStyle

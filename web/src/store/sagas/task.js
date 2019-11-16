@@ -18,17 +18,6 @@ export function* addTask(action) {
   }
 }
 
-export function* getTask(action) {
-  try {
-    const { payload } = action
-    const { data } = yield call(api.get, `/tasks/project/${payload.projectId}`)
-    yield put(TaskActions.taskSuccess({ tasks: data, projectId: payload.projectId }))
-  } catch (error) {
-    const erroMsg = 'Erro ao buscar tarefa!'
-    yield put(TaskActions.taskFailure(erroMsg + error))
-  }
-}
-
 export function* finishTask(action) {
   try {
     const { payload: task } = action
