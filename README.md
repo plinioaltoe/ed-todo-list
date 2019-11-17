@@ -14,9 +14,24 @@ yarn sequelize db:migrate
 yarn dev
 ```
 
+or
+
+```bash
+npm install
+npm sequelize db:migrate
+npm dev
+```
+
 In `web` folder, you can run the `web application` of the project
 
 ```bash
 yarn
 yarn start
+```
+
+or
+
+```bash
+npm install
+npm start
 ```
