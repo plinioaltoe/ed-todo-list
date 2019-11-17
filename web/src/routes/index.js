@@ -1,13 +1,13 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { ConnectedRouter } from 'connected-react-router';
-import Main from '../pages/main';
-import Signin from '../pages/signin';
-import Signup from '../pages/signup';
-import history from './history';
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { ConnectedRouter } from 'connected-react-router'
+import Main from '../pages/main'
+import Signin from '../pages/signin'
+import Signup from '../pages/signup'
+import history from './history'
 
-import { isAuthenticated } from '../services/auth';
+import { isAuthenticated } from '../services/auth'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -20,18 +20,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       )
     }
   />
-);
+)
 
 PrivateRoute.defaultProps = {
-  component: () => {},
+  component: {},
   location: {},
-};
+}
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func,
+  // eslint-disable-next-line react/forbid-prop-types
+  component: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
   location: PropTypes.object,
-};
+}
 
 const Routes = () => (
   <ConnectedRouter history={history}>
@@ -42,6 +43,6 @@ const Routes = () => (
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>
   </ConnectedRouter>
-);
+)
 
-export default Routes;
+export default Routes

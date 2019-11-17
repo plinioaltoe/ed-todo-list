@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom'
 import { logout } from '../../services/auth'
 import { Container, Menu, MenuProfile } from './styles'
@@ -23,6 +25,9 @@ const Header = ({ name }) => (
   </Container>
 )
 
+Header.propTypes = {
+  name: PropTypes.string.isRequired,
+}
 const mapStateToProps = state => {
   return { name: state.auth.data.name }
 }

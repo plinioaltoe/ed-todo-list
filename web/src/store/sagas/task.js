@@ -10,10 +10,10 @@ export function* addTask(action) {
     const { payload: task } = action
     yield call(api.post, `/tasks`, task)
     yield put(ProjectActions.getProjectRequest())
-    toast('Tarefa adicionada com sucesso!')
+    toast('Task succed add!')
     yield put(push('/main'))
   } catch (error) {
-    const erroMsg = 'Erro ao adicionar tarefa!'
+    const erroMsg = 'Something wrong adding the task!'
     yield put(TaskActions.taskFailure(erroMsg + error))
   }
 }
@@ -25,7 +25,7 @@ export function* finishTask(action) {
     yield put(ProjectActions.getProjectRequest())
     toast('Task succed done!')
   } catch (error) {
-    const erroMsg = 'Erro ao buscar tarefa!'
+    const erroMsg = 'Something wrong finishing the task!'
     yield put(TaskActions.taskFailure(erroMsg + error))
   }
 }
@@ -37,7 +37,7 @@ export function* deleteTask(action) {
     toast('Task succed deleted!')
     yield put(ProjectActions.getProjectRequest())
   } catch (error) {
-    const erroMsg = 'Erro ao buscar tarefa!'
+    const erroMsg = 'Something wrong deleting the task!'
     yield put(TaskActions.taskFailure(erroMsg + error))
   }
 }

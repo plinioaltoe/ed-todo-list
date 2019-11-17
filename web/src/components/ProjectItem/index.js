@@ -23,14 +23,29 @@ class ProjectItem extends Component {
     addTaksRequest: PropTypes.func.isRequired,
     updateProjectRequest: PropTypes.func.isRequired,
     deleteProjectRequest: PropTypes.func.isRequired,
-    project: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number]))
-      .isRequired,
+    project: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      Tasks: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          description: PropTypes.string,
+          done: PropTypes.bool,
+          finished_at: PropTypes.oneOfType([
+            PropTypes.instanceOf(Date),
+            PropTypes.string,
+          ]),
+          user_id: PropTypes.number,
+          project_id: PropTypes.number,
+        }),
+      ),
+    }).isRequired,
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      description: props.project.name,
+      description: '',
       taskDescription: '',
       error: '',
       errorTask: '',
@@ -39,7 +54,7 @@ class ProjectItem extends Component {
     }
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     const { project } = this.props
     const { description } = project
     this.setState({ description })
@@ -111,8 +126,8 @@ class ProjectItem extends Component {
     const { project } = this.props
     const { Tasks: tasks } = project
 
-    const tasksDone = Array.isArray(tasks) && tasks.filter(task => task.done)
-    const tasksToDo = Array.isArray(tasks) && tasks.filter(task => !task.done)
+    const tasksDone = Array.isArray(tasks) ? tasks.filter(task => task.done) : []
+    const tasksToDo = Array.isArray(tasks) ? tasks.filter(task => !task.done) : []
     return (
       <Container>
         {error && <Error project>{error}</Error>}
@@ -179,4 +194,4 @@ class ProjectItem extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ ...ProjectActions, ...TaskActions }, dispatch)
 
-export default connect(() => {}, mapDispatchToProps)(ProjectItem)
+export default connect(null, mapDispatchToProps)(ProjectItem)

@@ -4,16 +4,24 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Container } from './styles'
 
-import { Creators as ProjectActions } from '~/store/ducks/project'
 import { Creators as TaskActions } from '~/store/ducks/task'
 import TaskItem from '../TaskItem'
 
 class TaskList extends Component {
   static propTypes = {
+    title: PropTypes.string.isRequired,
     finishTaksRequest: PropTypes.func.isRequired,
     deleteTaksRequest: PropTypes.func.isRequired,
-    project: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number]))
-      .isRequired,
+    tasks: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        description: PropTypes.string,
+        done: PropTypes.bool,
+        finished_at: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
+        user_id: PropTypes.number,
+        project_id: PropTypes.number,
+      }),
+    ).isRequired,
   }
 
   handleCheck = e => {
@@ -46,7 +54,6 @@ class TaskList extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...ProjectActions, ...TaskActions }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(TaskActions, dispatch)
 
-export default connect(() => {}, mapDispatchToProps)(TaskList)
+export default connect(null, mapDispatchToProps)(TaskList)
