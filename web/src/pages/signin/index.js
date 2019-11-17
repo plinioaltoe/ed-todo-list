@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -7,13 +7,7 @@ import UserInputs from '../../components/UserInputs'
 
 import { Creators as AuthActions } from '../../store/ducks/auth'
 
-import {
-  Container,
-  Button,
-  Text,
-  Img,
-  Form,
-} from './styles'
+import { Container, Button, Text, Form, Error } from './styles'
 
 class Signin extends Component {
   static propTypes = {
@@ -41,8 +35,7 @@ class Signin extends Component {
     }
     if (!password) {
       this.setState({
-        errorLocalMessage:
-          'Password obrigatório.',
+        errorLocalMessage: 'Password obrigatório.',
       })
       return true
     }
@@ -59,44 +52,27 @@ class Signin extends Component {
   }
 
   handleChange = (e, campo) => {
-    this.setState({ [campo]: e.target.value })
+    this.setState({ [campo]: e.target.value, errorLocalMessage: '' })
   }
 
   render() {
-    const {
-      email,
-      password,
-      errorLocalMessage,
-    } = this.state
+    const { email, password, errorLocalMessage } = this.state
     const user = { email, password }
     const { error, loading } = this.props
     return (
-      <Fragment>
-        <Container>
-          <Form onSubmit={this.handleSignIn}>
-            <Img src="" alt="logo" />
-            {error && <p>{error}</p>}
-            {errorLocalMessage && (
-              <p>{errorLocalMessage}</p>
-            )}
-            <UserInputs
-              display="signin"
-              user={user}
-              handleChange={this.handleChange}
-            />
-            <Button type="submit">
-              {loading ? (
-                <i className="fa fa-spinner fa-pulse" />
-              ) : (
-                'Entrar'
-              )}
-            </Button>
-            <Link to="/signup">
-              <Text>Criar conta grátis</Text>
-            </Link>
-          </Form>
-        </Container>
-      </Fragment>
+      <Container>
+        <Form onSubmit={this.handleSignIn}>
+          {error && <Error>{error}</Error>}
+          {errorLocalMessage && <Error>{errorLocalMessage}</Error>}
+          <UserInputs display="signin" user={user} handleChange={this.handleChange} />
+          <Button type="submit">
+            {loading ? <i className="fa fa-spinner fa-pulse" /> : 'Entrar'}
+          </Button>
+          <Link to="/signup">
+            <Text>Criar conta</Text>
+          </Link>
+        </Form>
+      </Container>
     )
   }
 }
@@ -106,10 +82,6 @@ const mapStateToProps = state => ({
   loading: state.auth.loading,
 })
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(AuthActions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(AuthActions, dispatch)
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Signin)
+export default connect(mapStateToProps, mapDispatchToProps)(Signin)

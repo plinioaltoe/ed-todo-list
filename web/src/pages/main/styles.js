@@ -1,20 +1,23 @@
 import styled from 'styled-components'
 
-import { colors, metrics } from '../../styles'
+import { colors, metrics } from '~/styles'
 
-export const ContainerList = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: inherit;
-  color: ${colors.white};
-  font-size: ${metrics.font.small}px;
-  font-weight: bold;
-  padding: ${metrics.basePadding}px 10px ${metrics.basePadding}px 10px;
-  margin-bottom: ${metrics.baseMargin}px;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  justify-content: space-between;
 `
-export const ContentList = styled.div`
+
+export const Content = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: left;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 100%;
+  color: ${colors.white};
+  padding: 0 ${metrics.basePadding}px;
+  border-right: 1px solid ${colors.lighter};
 `

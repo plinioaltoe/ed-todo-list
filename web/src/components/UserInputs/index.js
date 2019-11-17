@@ -9,7 +9,7 @@ const UserInputs = ({ display, handleChange, user }) => (
     {display !== 'signin' && (
       <TextField
         type="text"
-        placeholder="Digite seu nome"
+        placeholder="Type your name"
         onChange={e => handleChange(e, 'name')}
         value={user.username}
       />
@@ -18,14 +18,14 @@ const UserInputs = ({ display, handleChange, user }) => (
     {display !== 'profile' && (
       <TextField
         type="email"
-        placeholder="Digite seu e-mail"
+        placeholder="Type your e-mail"
         onChange={e => handleChange(e, 'email')}
         value={user.email}
       />
     )}
     <Text>Senha</Text>
     <TextField
-      placeholder="Sua senha secreta"
+      placeholder="Secret password"
       type="password"
       onChange={e => handleChange(e, 'password')}
       value={user.password}
@@ -33,7 +33,7 @@ const UserInputs = ({ display, handleChange, user }) => (
     {display !== 'signin' && <Text>Confirmação de senha</Text>}
     {display !== 'signin' && (
       <TextField
-        placeholder="Confirmação de senha secreta"
+        placeholder="Confirm your password"
         type="password"
         onChange={e => handleChange(e, 'passwordConfirmation')}
         value={user.passwordConfirmation}

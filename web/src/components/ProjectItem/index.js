@@ -7,17 +7,18 @@ import {
   Description,
   InputDiv,
   TextField,
+  IconGroup,
   IconBtn,
   Button,
   Header,
-  TextFieldNewTask,
+  Error,
 } from './styles'
 
-import { Creators as ProjectActions } from '../../store/ducks/project'
-import { Creators as TaskActions } from '../../store/ducks/task'
+import { Creators as ProjectActions } from '~/store/ducks/project'
+import { Creators as TaskActions } from '~/store/ducks/task'
 import TaskList from '../TaskList'
 
-class ProjectList extends Component {
+class ProjectItem extends Component {
   static propTypes = {
     addTaksRequest: PropTypes.func.isRequired,
     updateProjectRequest: PropTypes.func.isRequired,
@@ -32,7 +33,8 @@ class ProjectList extends Component {
       description: props.project.name,
       taskDescription: '',
       error: '',
-      errorLocalMessage: '',
+      errorTask: '',
+      errorProject: '',
       isEditionMode: false,
     }
   }
@@ -43,11 +45,10 @@ class ProjectList extends Component {
     this.setState({ description })
   }
 
-  isEmpty = () => {
-    const { taskDescription } = this.state
-    if (!taskDescription) {
+  isEmpty = (campo, text) => {
+    if (!text) {
       this.setState({
-        errorLocalMessage: 'Name required.',
+        [campo]: 'Name required.',
       })
       return true
     }
@@ -56,16 +57,16 @@ class ProjectList extends Component {
 
   handleAdd = async e => {
     e.preventDefault()
-    if (!this.isEmpty()) {
+    const { taskDescription } = this.state
+    if (!this.isEmpty('errorTask', taskDescription)) {
       const { addTaksRequest, project } = this.props
-      const { taskDescription } = this.state
       await addTaksRequest({ description: taskDescription, projectId: project.id })
       this.setState({ taskDescription: '' })
     }
   }
 
   handleChange = (e, campo) => {
-    this.setState({ [campo]: e.target.value })
+    this.setState({ [campo]: e.target.value, error: '', errorProject: '', errorTask: '' })
   }
 
   handleDelete = () => {
@@ -81,9 +82,20 @@ class ProjectList extends Component {
   handleEditar = e => {
     e.preventDefault()
     const { description } = this.state
-    const { updateProjectRequest, project } = this.props
-    updateProjectRequest({ id: project.id, description })
-    this.handleChangeEditar()
+    if (!this.isEmpty('errorProject', description)) {
+      const { updateProjectRequest, project } = this.props
+      updateProjectRequest({ id: project.id, description })
+      this.handleChangeEditar()
+    }
+  }
+
+  handleCancel = () => {
+    const { project } = this.props
+    this.setState({
+      isEditionMode: false,
+      description: project.description,
+      errorProject: '',
+    })
   }
 
   render() {
@@ -91,7 +103,8 @@ class ProjectList extends Component {
       description,
       taskDescription,
       error,
-      errorLocalMessage,
+      errorTask,
+      errorProject,
       loading,
       isEditionMode,
     } = this.state
@@ -102,6 +115,8 @@ class ProjectList extends Component {
     const tasksToDo = Array.isArray(tasks) && tasks.filter(task => !task.done)
     return (
       <Container>
+        {error && <Error project>{error}</Error>}
+        {errorProject && <Error project>{errorProject}</Error>}
         <Header>
           {isEditionMode ? (
             <form onSubmit={this.handleEditar}>
@@ -112,9 +127,14 @@ class ProjectList extends Component {
                   onChange={e => this.handleChange(e, 'description')}
                   value={description}
                 />
-                <IconBtn value={project.id}>
-                  <i className="fa fa-check" />
-                </IconBtn>
+                <IconGroup>
+                  <IconBtn value={project.id}>
+                    <i className="fa fa-check" />
+                  </IconBtn>
+                  <IconBtn value={project.id} onClick={this.handleCancel}>
+                    <i className="fa fa-ban" />
+                  </IconBtn>
+                </IconGroup>
               </InputDiv>
             </form>
           ) : (
@@ -135,11 +155,12 @@ class ProjectList extends Component {
         <TaskList title="Done" tasks={tasksDone} disabled />
 
         <hr />
+        {error && <Error>{error}</Error>}
+        {errorTask && <Error>{errorTask}</Error>}
         <form onSubmit={this.handleAdd}>
           <InputDiv padding>
-            {error && <p>{error}</p>}
-            {errorLocalMessage && <p>{errorLocalMessage}</p>}
-            <TextFieldNewTask
+            <TextField
+              isTask
               type="text"
               placeholder="Task name"
               onChange={e => this.handleChange(e, 'taskDescription')}
@@ -158,4 +179,4 @@ class ProjectList extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ ...ProjectActions, ...TaskActions }, dispatch)
 
-export default connect(() => {}, mapDispatchToProps)(ProjectList)
+export default connect(() => {}, mapDispatchToProps)(ProjectItem)

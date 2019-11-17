@@ -2,12 +2,11 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Header from '~/components/Header'
-// import MeetupList from '~/components/MeetupList'
 import { Creators as ProjectActions } from '~/store/ducks/project'
 import { propTypes } from './propTypes'
-import { ContainerList, ContentList } from './styles'
+import { Content, Container } from './styles'
 import ProjectAdd from '~/components/ProjectAdd'
-import ProjectList from '~/components/ProjectList'
+import ProjectItem from '~/components/ProjectItem'
 
 class Main extends Component {
   static propTypes = propTypes
@@ -32,13 +31,13 @@ class Main extends Component {
     return (
       <Fragment>
         <Header />
-        <ContainerList>
-          <ContentList>
+        <Container>
+          <Content>
             {Array.isArray(projects) &&
-              projects.map(project => <ProjectList key={project.id} project={project} />)}
-          </ContentList>
+              projects.map(project => <ProjectItem key={project.id} project={project} />)}
+          </Content>
           <ProjectAdd />
-        </ContainerList>
+        </Container>
       </Fragment>
     )
   }

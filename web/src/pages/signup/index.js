@@ -1,16 +1,11 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import UserInputs from '../../components/UserInputs'
 import { Creators as UserActions } from '../../store/ducks/user'
-import {
-  Container,
-  Button,
-  Text,
-  Img,
-} from './styles'
+import { Container, Button, Text, Error, Form } from './styles'
 
 class Signup extends Component {
   static propTypes = {
@@ -28,42 +23,34 @@ class Signup extends Component {
   }
 
   isEmpty = () => {
-    const {
-      name,
-      email,
-      password,
-      passwordConfirmation,
-    } = this.state
+    const { name, email, password, passwordConfirmation } = this.state
     if (!name) {
       this.setState({
-        errorLocalMessage: 'Nome obrigatório.',
+        errorLocalMessage: 'Name required.',
       })
       return true
     }
     if (!email) {
       this.setState({
-        errorLocalMessage: 'E-mail obrigatório.',
+        errorLocalMessage: 'E-mail required.',
       })
       return true
     }
     if (!password) {
       this.setState({
-        errorLocalMessage:
-          'Password obrigatório.',
+        errorLocalMessage: 'Password required.',
       })
       return true
     }
     if (!passwordConfirmation) {
       this.setState({
-        errorLocalMessage:
-          'Confirmação de password obrigatória.',
+        errorLocalMessage: 'Confirmation required.',
       })
       return true
     }
     if (password !== passwordConfirmation) {
       this.setState({
-        errorLocalMessage:
-          'Passwords não conferem.',
+        errorLocalMessage: `Passwords don't match .`,
       })
       return true
     }
@@ -74,12 +61,7 @@ class Signup extends Component {
     e.preventDefault()
     if (!this.isEmpty()) {
       const { addUserRequest } = this.props
-      const {
-        name,
-        email,
-        password,
-        passwordConfirmation,
-      } = this.state
+      const { name, email, password, passwordConfirmation } = this.state
       addUserRequest({
         name,
         email,
@@ -90,17 +72,14 @@ class Signup extends Component {
   }
 
   handleChange = (e, campo) => {
-    this.setState({ [campo]: e.target.value })
+    this.setState({
+      [campo]: e.target.value,
+      errorLocalMessage: '',
+    })
   }
 
   render() {
-    const {
-      name,
-      email,
-      password,
-      passwordConfirmation,
-      errorLocalMessage,
-    } = this.state
+    const { name, email, password, passwordConfirmation, errorLocalMessage } = this.state
     const { error, loading } = this.props
     const user = {
       name,
@@ -109,32 +88,19 @@ class Signup extends Component {
       passwordConfirmation,
     }
     return (
-      <Fragment>
-        <Container>
-          <form onSubmit={this.handleSignup}>
-            <Img src="" alt="logo" />
-            {error && <p>{error}</p>}
-            {errorLocalMessage && (
-              <p>{errorLocalMessage}</p>
-            )}
-            <UserInputs
-              display="signup"
-              user={user}
-              handleChange={this.handleChange}
-            />
-            <Button type="submit">
-              {loading ? (
-                <i className="fa fa-spinner fa-pulse" />
-              ) : (
-                'Criar conta'
-              )}
-            </Button>
-            <Link to="/">
-              <Text>Já tenho conta</Text>
-            </Link>
-          </form>
-        </Container>
-      </Fragment>
+      <Container>
+        <Form onSubmit={this.handleSignup}>
+          {error && <Error>{error}</Error>}
+          {errorLocalMessage && <Error>{errorLocalMessage}</Error>}
+          <UserInputs display="signup" user={user} handleChange={this.handleChange} />
+          <Button type="submit">
+            {loading ? <i className="fa fa-spinner fa-pulse" /> : 'Criar conta'}
+          </Button>
+          <Link to="/">
+            <Text>Já tenho conta</Text>
+          </Link>
+        </Form>
+      </Container>
     )
   }
 }
@@ -144,10 +110,6 @@ const mapStateToProps = state => ({
   error: state.user.error,
 })
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(UserActions, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch)
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Signup)
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)
