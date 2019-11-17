@@ -6,7 +6,7 @@ This is the project of a TODO List made for EDirectinsure challenge
 
 Manually clone the repo.
 
-In the folder server, you can run the API rest of the project.
+In `server` folder, you can run the `API rest` of the project.
 
 ```bash
 yarn
@@ -14,7 +14,7 @@ yarn sequelizedb:migrate
 yarn start
 ```
 
-In the folder web, you can run the Front End of the project
+In `web` folder, you can run the `web application` of the project
 
 ```bash
 yarn
