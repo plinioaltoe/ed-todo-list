@@ -18,6 +18,9 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/users', UserController.index);
+routes.delete('/users', UserController.destroy);
+
 routes.get('/projects', ProjectController.index);
 routes.get('/projects/:id', ProjectController.show);
 routes.post('/projects', ProjectController.store);
