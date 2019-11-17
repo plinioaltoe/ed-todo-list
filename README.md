@@ -10,8 +10,8 @@ In `server` folder, you can run the `API rest` of the project.
 
 ```bash
 yarn
-yarn sequelizedb:migrate
-yarn start
+yarn sequelize db:migrate
+yarn dev
 ```
 
 In `web` folder, you can run the `web application` of the project
