@@ -35,3 +35,17 @@ or
 npm install
 npm start
 ```
+
+## Tests
+
+To run tests:
+
+```bash
+yarn test
+```
+
+or
+
+```bash
+npm run test
+```
