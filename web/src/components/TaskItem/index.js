@@ -10,8 +10,8 @@ import { Creators as TaskActions } from '~/store/ducks/task'
 
 class TaskList extends Component {
   static propTypes = {
-    finishTaksRequest: PropTypes.func.isRequired,
-    deleteTaksRequest: PropTypes.func.isRequired,
+    finishTaskRequest: PropTypes.func.isRequired,
+    deleteTaskRequest: PropTypes.func.isRequired,
     task: PropTypes.shape({
       id: PropTypes.number,
       description: PropTypes.string,
@@ -42,13 +42,13 @@ class TaskList extends Component {
   }
 
   handleFinish = () => {
-    const { finishTaksRequest, task } = this.props
-    finishTaksRequest(task.id)
+    const { finishTaskRequest, task } = this.props
+    finishTaskRequest(task.id)
   }
 
   handleDelete = () => {
-    const { deleteTaksRequest, task } = this.props
-    deleteTaksRequest(task.id)
+    const { deleteTaskRequest, task } = this.props
+    deleteTaskRequest(task.id)
   }
 
   render() {

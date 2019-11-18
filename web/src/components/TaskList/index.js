@@ -10,8 +10,8 @@ import TaskItem from '../TaskItem'
 class TaskList extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    finishTaksRequest: PropTypes.func.isRequired,
-    deleteTaksRequest: PropTypes.func.isRequired,
+    finishTaskRequest: PropTypes.func.isRequired,
+    deleteTaskRequest: PropTypes.func.isRequired,
     tasks: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
@@ -25,13 +25,13 @@ class TaskList extends Component {
   }
 
   handleCheck = e => {
-    const { finishTaksRequest } = this.props
-    finishTaksRequest(e.target.value)
+    const { finishTaskRequest } = this.props
+    finishTaskRequest(e.target.value)
   }
 
   handleDelete = e => {
-    const { deleteTaksRequest } = this.props
-    deleteTaksRequest(e.target.value)
+    const { deleteTaskRequest } = this.props
+    deleteTaskRequest(e.target.value)
   }
 
   render() {

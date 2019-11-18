@@ -20,7 +20,7 @@ import TaskList from '../TaskList'
 
 class ProjectItem extends Component {
   static propTypes = {
-    addTaksRequest: PropTypes.func.isRequired,
+    addTaskRequest: PropTypes.func.isRequired,
     updateProjectRequest: PropTypes.func.isRequired,
     deleteProjectRequest: PropTypes.func.isRequired,
     project: PropTypes.shape({
@@ -74,8 +74,8 @@ class ProjectItem extends Component {
     e.preventDefault()
     const { taskDescription } = this.state
     if (!this.isEmpty('errorTask', taskDescription)) {
-      const { addTaksRequest, project } = this.props
-      await addTaksRequest({ description: taskDescription, projectId: project.id })
+      const { addTaskRequest, project } = this.props
+      await addTaskRequest({ description: taskDescription, projectId: project.id })
       this.setState({ taskDescription: '' })
     }
   }

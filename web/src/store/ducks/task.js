@@ -22,6 +22,7 @@ const INITIAL_STATE = {
 export default function tasks(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.ADD_REQUEST:
+    case Types.DEL_REQUEST:
     case Types.FINISH_REQUEST:
       return { ...state, loading: true, error: '' }
     case Types.SUCCESS: {
@@ -42,19 +43,19 @@ export default function tasks(state = INITIAL_STATE, action) {
  * Actions
  */
 export const Creators = {
-  addTaksRequest: payload => ({
+  addTaskRequest: payload => ({
     type: Types.ADD_REQUEST,
     payload,
   }),
 
-  finishTaksRequest: id => ({
+  finishTaskRequest: id => ({
     type: Types.FINISH_REQUEST,
     payload: {
       id,
     },
   }),
 
-  deleteTaksRequest: id => ({
+  deleteTaskRequest: id => ({
     type: Types.DEL_REQUEST,
     payload: {
       id,
@@ -66,7 +67,7 @@ export const Creators = {
     payload: { data },
   }),
 
-  taksFailure: error => ({
+  taskFailure: error => ({
     type: Types.FAILURE,
     payload: { error },
   }),

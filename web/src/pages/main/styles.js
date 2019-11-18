@@ -14,10 +14,10 @@ export const Content = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
   width: 100%;
   color: ${colors.white};
-  padding: 0 ${metrics.basePadding}px;
+  padding: 0 ${metrics.basePadding * 4}px;
   border-right: 1px solid ${colors.lighter};
 `
