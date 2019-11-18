@@ -52,7 +52,6 @@ class TaskController {
         description,
         project_id: projectId,
       });
-
       return res.json({
         id: task.id,
         description: task.description,

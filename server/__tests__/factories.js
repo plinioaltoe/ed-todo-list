@@ -3,6 +3,7 @@ import { factory } from 'factory-girl';
 
 import User from '../src/app/models/User';
 import Project from '../src/app/models/Project';
+import Task from '../src/app/models/Task';
 
 factory.define('User', User, {
   name: faker.name.findName(),
@@ -11,7 +12,10 @@ factory.define('User', User, {
 });
 
 factory.define('Project', Project, {
-  id: faker.random.number(),
+  description: faker.lorem.sentence(),
+});
+
+factory.define('Task', Task, {
   description: faker.lorem.sentence(),
 });
 

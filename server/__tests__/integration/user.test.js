@@ -3,12 +3,10 @@ import bcrypt from 'bcryptjs';
 import app from '../../src/app';
 
 import factory from '../factories';
-// import truncate from '../utils/truncate';
 
 describe('User', () => {
   beforeEach(async () => {
     await factory.cleanUp();
-    //await truncate();
   });
   it('should encrypt user password when he is created', async () => {
     const user = await factory.create('User', {
@@ -22,6 +20,7 @@ describe('User', () => {
 
   it('should be able to be stored', async () => {
     const user = await factory.attrs('User');
+    user.passwordConfirmation = user.password;
     const response = await request(app)
       .post('/users')
       .send(user);
